@@ -1,0 +1,52 @@
+Scalability:
+	
+	1. Web Hosts ?
+		In order to get a website active and live on the internet, you need to host a website. If you are seeking to build a website without taking web hosting services, registering domain names will serve no purpose. ... Web hosting is basically the space that you buy on a web server to store your website files. When you buy website hosting you basically rent server space on a server where your web files will be placed. So whenever somebody will look up for your website by entering your domain, he will get directed to your website.
+		
+		You as a user also have the ability to have your own full-fledged server right from your own home, but the main difference between investing in your own server and picking a hosting company is that designing your own server is likely to cost you dearly. To set up a server, you will require a powerful computer with a good processor and lots of RAM and also an operating system like Linux or Windows. To add to that you will also be required to have technical skills to manage and run the server.
+
+		When you hire a web hosting company, it will manage all backend concerns, including the maintenance and repair of the servers. So basically, web hosts are designed to make your life easier by saving you the hassle.
+		
+		Examples of Web Hosts: GoDaddy, Bluehost, HostGator
+		
+	2. What to look for when selecting a webhost ?
+		- Price of the service
+		- Whether the  Host supports SFTP (Secured File Transferr Protocol)
+		- Security of Data in the Server
+		- Do all clients of the WebHost Service Provider share the same physical hardware and OS. 
+		  (In case they all share the same OS, security concerns arise). To avoid that VPS is used.
+		  
+	3. What is a VPS ?
+		Virtual Private Server (VPS) is a virtual machine sold as a service by an Internet hosting service.  Although the physical resources are still shared, virtualization provides a higher level of security, as the individual virtual servers are mostly isolated from each other and may run their own full-fledged operating system which can be independently rebooted as a virtual instance. 
+		
+		A single physical server is partitioned to appear as multiple server. The physical server typically runs a hypervisor which is tasked with creating, releasing, and managing the resources of "guest" operating systems, or virtual machines. These guest operating systems are allocated a share of resources of the physical server, typically in a manner in which the guest is not aware of any other physical resources save for those allocated to it by the hypervisor.
+		
+	4. Scaling:
+		- Vertical Scaling 	: Buy more physical resource (CPU, RAM, Disks) with more money and thus add power to a single existing machine.
+							  Con: 	Either exhaust the available financial resource, or the state-of-the-art technology
+							  
+		- Horizontal Scaling: Adding multiple machines and designing the architecture of the system to efficiently use the power of several machines,
+			inorder to optimise performance
+			
+		- The first golden rule for scalability: every server contains exactly the same codebase and does not store any user-related data, like sessions or profile pictures, on local disc or memory. 
+		- Denormalised Database, NoSQL over MySQL
+		- Use of In-Memory Cache
+		- Support for AsynchronousLY pERFORMING jobs, using a MessageQueue like Rabbitmq
+			
+	5. Problems with Horizontal Scaling and how to address them:
+		- Load Balancing: 	How to evenly distribute incoming requests to the server among all the available machines.
+		
+			How the load balances routs request to different backend servers:
+				- Could be based on type of request, in which case each backend server serves a dedicated type of request
+				- Could be based on how busy a server is
+				- Round-Robin using a Hash Function. Has drawback that a single server may get several heaby requests, while another server is   
+				  relatively free. Sessions model in a PHP server fails for a Round-Robin Load balancing.
+				- RAID: Redundant Array of Independent Disks. Two HDDs. If one hdd dies then the other hdd still holds all the data. 
+	
+		- Caching:
+
+		-  Replication (of database): 
+			- Master-Slave: Write to Master, Read from Queries
+			- More than 1 Load Balancers to avoid single point of failure: Active-Active and Active-Passive
+		
+		- Partitioning: 
