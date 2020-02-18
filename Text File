@@ -50,3 +50,49 @@ Scalability:
 			- More than 1 Load Balancers to avoid single point of failure: Active-Active and Active-Passive
 		
 		- Partitioning: 
+		
+		
+Performance vs Scability:
+	- If you have a performance problem, your system is slow for a single user.
+	- If you have a scalability problem, your system is fast for a single user but slow under heavy load.
+	
+CAP Theorem:
+	The CAP theorem, states that it is impossible for a distributed data store to simultaneously provide
+	more than two out of the following three guarantees:
+		1. Consistency - Every read receives the most recent write or an error
+		2. Availability - Every request receives a response, without guarantee that it contains the most recent version of the information
+		3. Partition Tolerance - The system continues to operate despite arbitrary partitioning due to network failures
+
+	When a network partition failure happens should we dec ide to
+	1. CP: Cancel the operation and thus decrease the availability but ensure consistency. 
+		   CP is a good choice if your business needs require atomic reads and writes.
+	2. AP: Proceed with the operation and thus provide availability but risk inconsistency.
+		   AP is a good choice if the business needs allow for eventual consistency or when the system needs to continue working despite external errors.
+		   
+Consistency Patterns:
+	1. Weak Ccoonsistency: Video Chat
+	2. Eventual Consistency: Email
+	3. Strong Consistency: Database, where transactions are involved
+	
+Availability Patterns:
+	1. Active-Passive
+	2. Active-Active
+	
+	Availability in parallel vs in sequence
+
+		If a service consists of multiple components prone to failure, the service's overall availability depends on whether the components are in sequence or in parallel.
+
+		In sequence
+			- Overall availability decreases when two components with availability < 100% are in sequence:
+			- Availability (Total) = Availability (Foo) * Availability (Bar)
+				If both Foo and Bar each had 99.9% availability, their total availability in sequence would be 99.8%.
+
+		In parallel
+			- Overall availability increases when two components with availability < 100% are in parallel:
+			- Availability (Total) = 1 - (1 - Availability (Foo)) * (1 - Availability (Bar))
+				If both Foo and Bar each had 99.9% availability, their total availability in parallel would be 99.9999%.
+			
+Replication Patterns:
+	1. Master-Slave 
+	2. Master-Master
+	
