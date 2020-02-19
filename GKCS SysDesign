@@ -41,4 +41,72 @@ Why is consistent hashing required:
 	Inorder to solve this problem consistent hashing is preferred. 
 	Refer to (https://www.youtube.com/watch?v=K0Ta65OqQkY&list=PLMCXHnjXnTnvo6alSjVkgxV-VH6EPyvoX&index=4)
 
+How does Consistent Mapping Work
 
+	In consistent hashing, we maintain a hash id space of fixed size, i.e. the hash function(s) will create a hash id within a defined range (1,...,M)
+	
+	This hash id space is maintained as a ring ( usnig % )
+	
+	Before serving requests, server id of all available servers are hashed. The resulting hash id of each server is maintained in the circular hash id space
+	
+	Now the rwquest are hased based on their req id. h(r1) is now served by a server whose hash id is clockwise nearest in the ring hash id space .
+	
+	Servers can then store relevant request data in them while allowing the system flexibility and scalability.
+	
+	Refer:
+		https://www.youtube.com/watch?v=zaRkONvyGr8&list=PLMCXHnjXnTnvo6alSjVkgxV-VH6EPyvoX&index=5
+		https://www.youtube.com/watch?v=viaNG1zyx1g
+
+
+
+MESSAGE/TASK QUEUE
+-------------------
+
+Persists incomplete tasks.
+Assigns them to a server
+In case server doesnot respond back, it assumes server dead and the task is returned to queue to be taken up by different sever based on strategy 
+
+
+SHARDING:
+--------
+
+Sharding is a technique to Horizontally Partiition the data
+
+In sharding the data is partitioned based on a particular attribute of the data.
+eg. Users Data is partitioned into several chunks of data based on Location Attribute
+
+
+Problems with Sharding Data:
+	- If joins are required between two shards of data, that join has to occur across networks, which is very expensive
+	- Once data is sharded based on a particular attribute, that is final. We cannot have dynamic number of shards. Hierarchial Sharding to overcome 
+		this problem
+
+Best Practice:
+	- Creating an index on each sharded
+	- Master-Slave of each shard
+	
+	
+Sql vs NoSql:
+-------------
+	Advantages:
+		- In NoSQL entire data is stored as a single object with nsted objects inside the parent object wherever necessary, thus removing the need for  
+		  joins which are expensive
+		  
+		- Schema is flexible. If a particular column is null, it doesnot need to be specified. Also any new attribute can be added as per needed. But 
+			in sql, if we add new coulmns, all pres stored data needs to be updated
+		  
+		- Horizontal Partitioning (Shard) is in-built. Therefore it is more suitable for scability.
+		
+	Disadvantages:
+		- Updates is costly
+		- Consistency is not garunteed. Hence transactions are not supported.
+		- Its not read-optimised. As for each query, entire objects is read.
+		- Relations and foreign-Key constraints are not implicit.
+		- If join is required between two NoSQL databases, its too hard.
+	
+
+	
+	
+	
+
+	
