@@ -1,0 +1,44 @@
+GKCS System Design
+
+Things to take care of :
+
+1. Avoid single point of failure : Multiple copies of same server so as to avoid single-point-of-failure
+2. Replication should be easy : Adding or Removing Servers should be easy
+3. Consistency : Information on each server should be same
+4. Load Distribution : Load should be fairly distributed among all available servers
+5. Requests should be responded to in a timely fashion,. This requires optimization of networks and databases
+
+Horizontal vs Vertical Scaling:
+_____________________________________________________
+	Horizontal			|	Vertical				|
+-----------------------------------------------------
+- Load Balancing Reqd	|	- N/A					|
+- RESILIENT				|	- Single point-of-flure	|
+- Network calls betwn	|	- INTER PROCESS COMM	|
+  servers				|							|
+- Data Inconsistency	|	- CONSISTENT			|
+  among servers			|							|
+- SCALES WELL			|	- Hardware Limit		|
+-----------------------------------------------------
+The capitalised characteristics are the desireable ones
+
+Consistent Hashing:
+-------------------
+
+Why is consistent hashing required:
+
+	Consider the example of a load balancer scenario. We have uspoose 4 servers serving requests in a system. 
+	The load balancer distributes the load  as such:
+		If r1 is the request id, H(r1) gives us hr1 which is the hash code for req 1.
+		Now we calculate hr1%n where nis the number of available servers which is 4 in this case.
+		
+		Now H(r1) gives us a hash code hr1 which is usually user specific. So a particular user always hapopens to be routed to same server.
+		Under this condoition, some data of that user can be cached into the servers cache memory for faster retrieval.
+	
+	Now, when we scale the system and add a new server, n increases to 5. As a result the value r1%n changes. 
+	So all the relevant useful information in each servers cache becomes useless.
+	
+	Inorder to solve this problem consistent hashing is preferred. 
+	Refer to (https://www.youtube.com/watch?v=K0Ta65OqQkY&list=PLMCXHnjXnTnvo6alSjVkgxV-VH6EPyvoX&index=4)
+
+
